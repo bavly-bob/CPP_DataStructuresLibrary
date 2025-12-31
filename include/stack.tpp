@@ -13,12 +13,6 @@ ds::Stack<T>::Stack()
 }
 
 template <typename T>
-ds::Stack<T>::~Stack()
-{
-    delete[] data;
-}
-
-template <typename T>
 void ds::Stack<T>::resize(std::size_t newCapacity)
 {
     T* newData = new T[newCapacity];
@@ -74,5 +68,67 @@ bool ds::Stack<T>::isEmpty() const
 template <typename T>
 std::size_t ds::Stack<T>::size() const
 {
-    return topIndex;
+    return topIndex; 
+}
+
+// the rule of 5 implementations would go here
+
+template <typename T>
+ds::Stack<T>::~Stack()
+{
+    delete[] data;
+}
+
+template <typename T>
+ds::Stack<T>::Stack(const Stack& other)
+    : capacity(other.capacity), topIndex(other.topIndex)
+{
+    data = new T[capacity];
+    for (std::size_t i = 0; i < topIndex; i++)
+    {
+        data[i] = other.data[i];
+    }
+}
+
+template <typename T>
+ds::Stack<T>& ds::Stack<T>::operator=(const Stack& other)
+{
+    if(this != &other)
+    {
+        delete[] data;
+        capacity = other.capacity;
+        topIndex = other.topIndex;
+        data = new T[capacity];
+        for (std::size_t i = 0; i < topIndex; i++)
+        {
+            data[i] = other.data[i];
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+ds::Stack<T>::Stack(Stack&& other) noexcept
+    : data(other.data), capacity(other.capacity), topIndex(other.topIndex)
+{
+    other.data = nullptr;
+    other.capacity = 0;
+    other.topIndex = 0;
+}
+
+template <typename T>
+ds::Stack<T>& ds::Stack<T>::operator=(Stack&& other) noexcept
+{
+    if(this != &other)
+    {
+        delete[] data;
+        data = other.data;
+        capacity = other.capacity;
+        topIndex = other.topIndex;
+
+        other.data = nullptr;
+        other.capacity = 0;
+        other.topIndex = 0;
+    }
+    return *this;
 }
