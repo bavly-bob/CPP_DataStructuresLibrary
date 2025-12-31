@@ -1,9 +1,12 @@
 #include "stack.h"
+#include <cstddef>
+#include <stdexcept>
+
 
 template <typename T>
 ds::Stack<T>::Stack()
 {
-    size_t initialCapacity = 1;
+    size_t initialCapacity = 4;
     data = new T[initialCapacity];
     capacity = initialCapacity;
     topIndex = 0;
@@ -23,9 +26,8 @@ void ds::Stack<T>::resize(std::size_t newCapacity)
     {
         newData[i] = data[i];
     }
-    delete[] data;
-    data = newData;
-    delete[] newData;
+    delete[] data;       // delete old memory
+    data = newData;      // take ownership of new memory
     capacity = newCapacity;
 }
 
@@ -66,7 +68,7 @@ const T& ds::Stack<T>::top() const
 template <typename T>
 bool ds::Stack<T>::isEmpty() const
 {
-    return (topIndex == 0)? true : false;
+    return topIndex == 0;
 }
 
 template <typename T>
