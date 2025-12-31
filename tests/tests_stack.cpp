@@ -21,7 +21,7 @@ int main()
     std::cout << "Copied stack size: " << copiedStack.size() << std::endl; // Should print 2
 
     ds::Stack<int> movedStack = std::move(stack); // Test move constructor
-    std::cout << "Top element of moved stack: " << movedStack.top() <<
+    std::cout << "Top element of moved stack: " << movedStack.top() << std::endl; // Should print 20
     std::cout << "Moved stack size: " << movedStack.size() << std::endl; // Should print 2
     std::cout << "Original stack size after move: " << stack.size() << std::endl; // Should print 0
     return 0;
